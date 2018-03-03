@@ -13,5 +13,21 @@
     <% if(user) {%>
         <%=user%>
     <% } %>
+
+    <form action="/search/" method="POST">
+        <input type="text" name="cityname" placeholder="Enter City Name">
+        <button type="submit">Enter</button>
+    </form>
+
+    <% if(searchedBars) {%>
+    <% searchedBars.forEach((bar) => { %>
+        <div>
+            <h3><%= bar["name"] %></h3>
+            <p><%= bar["formatted_address"]%></p>
+            <p><%= bar["rating"]%></p>   
+            <span><%= bar["usersAttending"]%></span>
+        </div>
+    <% }) %>
+    <% } %>
 </body>
 </html>
