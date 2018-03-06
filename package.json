@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/ankorGH/Nightlife-Basejump#readme",
   "dependencies": {
+    "@google/maps": "^0.4.5",
+    "body-parser": "^1.18.2",
     "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "items-promise": "^1.0.0",
     "mongoose": "^5.0.7",
     "passport": "^0.4.0",
     "passport-twitter": "^1.0.4"
