@@ -1,22 +1,16 @@
 <nav>
-    <div class="nav-wrapper purple darken-4">
-        <a href="/" class="brand-logo"><i class="material-icons">pan_tool</i>VoteApp</a>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><i class="material-icons">local_bar</i>NightLife</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul id="dropdown1" class="dropdown-content">
-            <!-- <li><a href="/profile/changePassword">Change Password</a></li> -->
-            <li class="divider"></li>
-            <li><a href="/auth/signout">Logout</a></li>
-        </ul>
+      
         
         <ul class="right hide-on-med-and-down">
             <% if(!user) {%>
-            <li><a href="/auth/signin">Login</a></li>
-            <li><a href="/auth/signup">Sign Up</a></li>
+            <li><a href="/auth/twitter">Login</a></li>
+            <li><a href="/auth/twitter">Sign Up</a></li>
             <%} else { %>
-            <li><a href="/profile">Hello <%= user.username %></a></li>
-            <li>
-                <a class="dropdown-button" href="#!" data-activates="dropdown1">Settings<i class="material-icons right">arrow_drop_down</i></a>
-            </li>
+            <li><a href="/">Hello <%= user.username %></a></li>
+            <li><a href="/auth/signout">Logout</a></li>
             <% } %>
         </ul>
 
