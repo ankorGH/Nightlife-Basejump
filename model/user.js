@@ -1,7 +1,7 @@
-let mongooose = require("mongoose");
-let Schema = mongooose.Schema;
+const mongooose = require("mongoose");
+const Schema = mongooose.Schema;
 
-let UserSchema = new Schema({
+const UserSchema = new Schema({
   username: String,
   twitterId: Number
 });
