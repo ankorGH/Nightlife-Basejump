@@ -26,7 +26,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set("view engine", "ejs");
-
 app.use("/auth", authRoute);
 app.use("/search", searchRoute);
 
