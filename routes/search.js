@@ -5,8 +5,6 @@ const router = require("express").Router();
 const bodyParser = require("body-parser");
 const { serial, parallel } = require("items-promise");
 
-let urlencodedParser = bodyParser.urlencoded({ extended: true });
-
 const authCheck = (req, res, next) => {
   if (!req.user) {
     res.redirect("/auth/twitter");
@@ -15,53 +13,51 @@ const authCheck = (req, res, next) => {
   }
 };
 
-router.post("/", urlencodedParser, (req, res) => {
-  if (req.body) {
-    let cityName = req.body.cityname;
-    let bars;
+router.get("/:cityname", (req, res) => {
+  let cityName = req.params.cityname;
+  let bars;
 
-    GoogleMapsClient.places(
-      {
-        query: "bars in " + cityName,
-        type: "bars"
-      },
-      (err, response) => {
-        if (err) throw err;
-        bars = response.json.results.map(bar => {
-          return {
-            name: bar["name"],
-            formatted_address: bar["formatted_address"],
-            rating: bar["rating"],
-            place_id: bar["place_id"],
-            usersAttending: []
-          };
-        });
-
-        const findOrCreate = elem => {
-          return new Promise(function(resolve, reject) {
-            BarModel.find({ place_id: elem["place_id"] }, (err, barFound) => {
-              if (err) throw err;
-              if (!barFound[0]) {
-                let newBar = new BarModel(elem);
-                newBar.save((err, fn) => {
-                  resolve(fn);
-                });
-              } else {
-                resolve(barFound[0]);
-              }
-            }).limit(1);
-          });
+  GoogleMapsClient.places(
+    {
+      query: "bars in " + cityName,
+      type: "bars"
+    },
+    (err, response) => {
+      if (err) throw err;
+      bars = response.json.results.map(bar => {
+        return {
+          name: bar["name"],
+          formatted_address: bar["formatted_address"],
+          rating: +bar["rating"],
+          place_id: bar["place_id"],
+          usersAttending: []
         };
+      });
 
-        parallel(bars, findOrCreate).then(allData => {
-          res.render("home", { user: req.user, searchedBars: allData });
+      const findOrCreate = elem => {
+        return new Promise(function(resolve, reject) {
+          BarModel.find({ place_id: elem["place_id"] }, (err, barFound) => {
+            if (err) throw err;
+            if (!barFound[0]) {
+              let newBar = new BarModel(elem);
+              newBar.save((err, fn) => {
+                resolve(fn);
+              });
+            } else {
+              resolve(barFound[0]);
+            }
+          }).limit(1);
         });
-      }
-    );
-  }
+      };
+
+      parallel(bars, findOrCreate).then(allData => {
+        res.send(JSON.stringify(allData));
+      });
+    }
+  );
 });
 
-router.get("/search/going/:barId", authCheck, (req, res) => {
+router.get("/going/:barId", authCheck, (req, res) => {
   let barId = req.params.barId;
   let userName = req.user.username;
 
@@ -75,19 +71,13 @@ router.get("/search/going/:barId", authCheck, (req, res) => {
         bar["usersAttending"].splice(ind, 1);
         bar.save((err, userSaved) => {
           if (err) throw err;
-          res.render("home", {
-            user: req.user,
-            searchedBars: null
-          });
+          res.send("sub");
         });
       } else {
         bar["usersAttending"].push({ name: userName });
         bar.save((err, userSaved) => {
           if (err) throw err;
-          res.render("home", {
-            user: req.user,
-            searchedBars: null
-          });
+          res.send("add");
         });
       }
     }
