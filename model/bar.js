@@ -10,7 +10,7 @@ const BarSchema = new Schema({
   place_id: String,
   usersAttending: [UserSchema],
   formatted_address: String,
-  rating: String
+  rating: Number
 });
 
 const BarModel = mongoose.model("bar", BarSchema);
