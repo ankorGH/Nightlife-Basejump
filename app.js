@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.use(
   cookieSession({
     name: "Night-Life",
-    keys: ["sanaoiunfd87sakjhjhknKJLaoklAs"],
+    keys: [process.env.COOKIE_KEY],
     maxAge: 24 * 60 * 60 * 1000
   })
 );

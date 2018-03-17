@@ -7,7 +7,6 @@ const { serial, parallel } = require("items-promise");
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
-    // res.redirect("/auth/twitter");
     res.send("authenticate");
   } else {
     next();
