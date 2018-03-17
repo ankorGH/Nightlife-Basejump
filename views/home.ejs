@@ -82,7 +82,7 @@
                    let vm = this;
                    vm.load = true;
                    vm.bars = [];
-                    axios.get(window.location.hostname+"/search/"+cityname.trim())
+                    axios.get("/search/"+cityname.trim())
                     .then((res) => {
                         vm.load = false;
                         vm.bars = [];
