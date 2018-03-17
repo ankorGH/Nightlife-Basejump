@@ -1,6 +1,6 @@
 let mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/nightlife");
+mongoose.connect(process.env.Db_CONNECT);
 
 mongoose.connection
   .once("open", () => {

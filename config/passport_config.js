@@ -1,6 +1,3 @@
-// consumer key bhHizyDvPoXV7hiFw3vLw3BKc
-// consumer secret 0zFTKPJZffxQQDL4kolDm52WLddRK5vBTt83hxckqzG7XkwP3
-
 const passport = require("passport");
 const Strategy = require("passport-twitter").Strategy;
 const User = require("../model/user");
@@ -18,8 +15,8 @@ passport.deserializeUser(function(id, done) {
 passport.use(
   new Strategy(
     {
-      consumerKey: "bhHizyDvPoXV7hiFw3vLw3BKc",
-      consumerSecret: "0zFTKPJZffxQQDL4kolDm52WLddRK5vBTt83hxckqzG7XkwP3B",
+      consumerKey: process.env.TW_CONSUMER_KEY,
+      consumerSecret: process.env.TW_CONSUMER_SECRET,
       callbackURL: "http://localhost:3000/auth/twitter/redirect"
     },
     function(token, tokenSecret, profile, done) {
