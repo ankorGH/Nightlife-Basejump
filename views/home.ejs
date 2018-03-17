@@ -100,7 +100,7 @@
                 checkAttend: function(barId,index){
                     console.log("check attending");
                     let vm = this;
-                    axios.get("http://localhost:3000/search/going/"+barId.trim())
+                    axios.get("/search/going/"+barId.trim())
                     .then((res) => {
                         if(res.data == "authenticate"){
                             alert("Please Login");
