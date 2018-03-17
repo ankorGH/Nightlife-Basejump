@@ -17,7 +17,7 @@ passport.use(
     {
       consumerKey: process.env.TW_CONSUMER_KEY,
       consumerSecret: process.env.TW_CONSUMER_SECRET,
-      callbackURL: "http://localhost:3000/auth/twitter/redirect"
+      callbackURL: "https://fnightlife.herokuapp.com/auth/twitter/redirect"
     },
     function(token, tokenSecret, profile, done) {
       User.findOne({ twitterId: profile.id }, (err, user) => {
